@@ -6,23 +6,21 @@ class LoginPage extends StatelessWidget {
   final TextEditingController _passwordController = TextEditingController();
 
   void _login(BuildContext context) {
-    // Aquí puedes agregar tu lógica de autenticación personalizada.
-    // Por ejemplo, puedes comparar los valores ingresados con una lista de usuarios predefinidos o con una base de datos local.
-
     String username = _usernameController.text;
     String password = _passwordController.text;
 
-    // Verificar si las credenciales son válidas (esto es solo un ejemplo, debes implementar tu propia lógica de autenticación).
     if (username == 'usuario' && password == 'contraseña') {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => DashboardPage(username: username)),
+          builder: (context) => DashboardPage(username: username),
+        ),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Error de inicio de sesión: Credenciales inválidas'),
+          backgroundColor: Colors.red,
         ),
       );
     }
@@ -39,19 +37,49 @@ class LoginPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextField(
-              controller: _usernameController,
-              decoration: InputDecoration(labelText: 'Nombre de usuario'),
+            Image.asset(
+              'assets/logo.png', // Ruta de la imagen del logo
+              width: 150,
+              height: 150,
             ),
-            TextField(
+            SizedBox(height: 20),
+            TextFormField(
+              controller: _usernameController,
+              decoration: InputDecoration(
+                labelText: 'Nombre de usuario',
+                prefixIcon: Icon(Icons.person),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            TextFormField(
               controller: _passwordController,
               obscureText: true,
-              decoration: InputDecoration(labelText: 'Contraseña'),
+              decoration: InputDecoration(
+                labelText: 'Contraseña',
+                prefixIcon: Icon(Icons.lock),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
             ),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () => _login(context),
               child: Text('Iniciar Sesión'),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
+            TextButton(
+              onPressed: () {},
+              child: Text('¿Olvidaste tu contraseña?'),
             ),
           ],
         ),
